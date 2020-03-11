@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">GymBreak</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string-array name="trainTypes">
+        <item>Поднятие рук вверх</item>
+        <item>Поднятие рук в стороны</item>
+    </string-array>
+</resources>
