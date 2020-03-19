@@ -1,6 +1,5 @@
-package com.example.gymbreak.ui.home
+package com.example.gymbreak.ui.TrainModule
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,23 +9,23 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.example.gymbreak.ActivityCoordinately
 import com.example.gymbreak.R
 
-class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
+class ChooseTrain(): Fragment(), AdapterView.OnItemSelectedListener {
 
-    private lateinit var homeViewModel: HomeViewModel
-
+    private lateinit var chooseTrainViewModel: ChooseTrainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        setSpinnerListener(root)
-        return root
+        chooseTrainViewModel =
+            ViewModelProviders.of(this).get(ChooseTrainViewModel::class.java)
+        val rootView = inflater.inflate(R.layout.fragment_choose_train, container, false)
+        setSpinnerListener(rootView)
+        return rootView
     }
 
     private fun setSpinnerListener(rootView: View) {
@@ -48,6 +47,7 @@ class HomeFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
         view.visibility = View.INVISIBLE
+        (activity as ActivityCoordinately).coordinator.present(TrainFragment())
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {
