@@ -26,23 +26,14 @@ class StatisticsFragment : Fragment() {
 
         val bar3d = AnyChart.column()
 
-        val data1 = mutableListOf<ValueDataEntry>()
-        val data2 = mutableListOf<ValueDataEntry>()
-        val data3 = mutableListOf<ValueDataEntry>()
-        data1.add(ValueDataEntry("Поднятие рук вверх", 10000))
-        data2.add(ValueDataEntry("Поднятие рук вверх и в стороны", 12000))
-        data3.add(ValueDataEntry("Поднятие рук в стороны", 18000))
+        /*val firstTrainData = mutableListOf<ValueDataEntry>()
+        val secondTrainData = mutableListOf<ValueDataEntry>()
+        firstTrainData.add(ValueDataEntry("Поднятие рук вверх и в стороны", 12000))
+        secondTrainData.add(ValueDataEntry("Поднятие рук в стороны", 18000))*/
 
 
-        val line1 = bar3d.column(data1 as List<ValueDataEntry>)
-
-        bar3d.column(data2 as List<ValueDataEntry>)//.setColor("#673AB7")
-        bar3d.column(data3 as List<ValueDataEntry>)
-
-
-        /*line1.setHeight(20.0)
-        line1.setColor("#00574B")
-        line1.setWidth(20.0)*/
+        bar3d.column(statisticsViewModel.firstTrainData as List<ValueDataEntry>)
+        bar3d.column(statisticsViewModel.secondTrainData as List<ValueDataEntry>)
 
         val anyChartView: AnyChartView = root.findViewById(R.id.chartView)
         anyChartView.setChart(bar3d)
