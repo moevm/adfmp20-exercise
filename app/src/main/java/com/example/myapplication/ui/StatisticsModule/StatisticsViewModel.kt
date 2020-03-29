@@ -12,7 +12,7 @@ class StatisticsViewModel : ViewModel() {
 
     init {
         // TODO: Its a mock
-        firstTrainData.add(ValueDataEntry("Поднятие рук вверх и в стороны", 27.8))
-        secondTrainData.add(ValueDataEntry("Поднятие рук в стороны", 43.8))
+        firstTrainData.add(ValueDataEntry("Поднятие рук вверх и в стороны. Качество: 27.8", 27.8))
+        secondTrainData.add(ValueDataEntry("Поднятие рук в стороны. Качество: 43.8", 43.8))
     }
 }

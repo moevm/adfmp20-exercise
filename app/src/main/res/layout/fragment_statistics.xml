@@ -11,7 +11,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="60dp"
         android:text="2 тренировки"
         android:textColor="@color/colorBasePurple"
         android:textSize="18sp"
@@ -19,6 +19,19 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/yLegendLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="51dp"
+        android:layout_marginTop="120dp"
+        android:text="Качество\nтренировки,\n%"
+        android:textAlignment="center"
+        android:textColor="@color/colorBasePurple"
+        android:textSize="8sp"
+        android:textStyle="normal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.anychart.anychart.AnyChart
-import com.anychart.anychart.AnyChartView
-import com.anychart.anychart.ValueDataEntry
 import com.example.myapplication.R
+import android.R.attr.animation
+import com.anychart.anychart.*
+import com.anychart.anychart.AnyChart.*
+
 
 class StatisticsFragment : Fragment() {
 
@@ -26,11 +27,7 @@ class StatisticsFragment : Fragment() {
 
         val bar3d = AnyChart.column()
 
-        /*val firstTrainData = mutableListOf<ValueDataEntry>()
-        val secondTrainData = mutableListOf<ValueDataEntry>()
-        firstTrainData.add(ValueDataEntry("Поднятие рук вверх и в стороны", 12000))
-        secondTrainData.add(ValueDataEntry("Поднятие рук в стороны", 18000))*/
-
+        bar3d.setAnimation(true)
 
         bar3d.column(statisticsViewModel.firstTrainData as List<ValueDataEntry>)
         bar3d.column(statisticsViewModel.secondTrainData as List<ValueDataEntry>)
