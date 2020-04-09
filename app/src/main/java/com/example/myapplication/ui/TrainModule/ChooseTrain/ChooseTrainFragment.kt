@@ -1,22 +1,17 @@
 package com.example.myapplication.ui.TrainModule.ChooseTrain
 
 import android.os.Bundle
-import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModelProviders
 import com.example.myapplication.BaseSpinner.BaseSpinner
 import com.example.myapplication.Coordinator.BaseCoordinatelyActivity
 import com.example.myapplication.R
-import com.example.myapplication.TrainActivity
+import com.example.myapplication.ui.TrainModule.Train.TrainActivity
 
 class ChooseTrainFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -69,7 +64,8 @@ class ChooseTrainFragment : Fragment(), AdapterView.OnItemSelectedListener {
         if (isAlreadySelected) {
             (activity as BaseCoordinatelyActivity)
                 .coordinator
-                .present(TrainActivity::class.java,
+                .present(
+                    TrainActivity::class.java,
                          currentActivity = (activity as AppCompatActivity),
                          activityName = chooseTrainViewModel.exersices.get(pos))
         }

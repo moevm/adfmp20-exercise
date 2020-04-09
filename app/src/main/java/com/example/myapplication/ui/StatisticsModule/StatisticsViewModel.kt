@@ -1,18 +1,62 @@
 package com.example.myapplication.ui.StatisticsModule
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.anychart.anychart.ValueDataEntry
+import com.example.myapplication.ui.TrainModule.Train.CacheManager
 
-class StatisticsViewModel : ViewModel() {
+class StatisticsViewModel(context: Context) : ViewModel() {
 
-    val firstTrainData = mutableListOf<ValueDataEntry>()
-    val secondTrainData = mutableListOf<ValueDataEntry>()
+    private val cacheManager: CacheManager = CacheManager(context)
 
-    init {
-        // TODO: Its a mock
-        firstTrainData.add(ValueDataEntry("Поднятие рук вверх и в стороны. Качество: 27.8", 27.8))
-        secondTrainData.add(ValueDataEntry("Поднятие рук в стороны. Качество: 43.8", 43.8))
+    fun getDayViewModel(): MutableList<MutableList<ValueDataEntry>> {
+        val trainResult: MutableList<Double> = cacheManager.getTrainsResultByCurrentDay()
+        val viewModel: MutableList<MutableList<ValueDataEntry>> = mutableListOf()
+        for (training in trainResult) {
+            val columnViewModel = mutableListOf<ValueDataEntry>()
+            columnViewModel.add(ValueDataEntry("\"Прошедшая тренировка. Качество: ${training} %", training))
+            viewModel.add(columnViewModel)
+        }
+        return viewModel
+    }
+
+    val dayTrainingsCount: Int
+    get() = cacheManager.getTrainsResultByCurrentDay().count()
+
+    val weekTrainingsCount: Int
+    get() {
+        var count: Int = 0
+        for (day in 1..8) {
+            count += cacheManager.getTrainsResultByDay(day).count()
+        }
+        return count
+    }
+
+    fun getWeekViewModel(): MutableList<MutableList<ValueDataEntry>> {
+        val viewModel: MutableList<MutableList<ValueDataEntry>> = mutableListOf()
+
+        for (day in 1..8) {
+            val trainingsList = cacheManager.getTrainsResultByDay(day)
+            var dayQuality = trainingsList.sum() / trainingsList.count()
+            val columnViewModel = mutableListOf<ValueDataEntry>()
+            columnViewModel.add(ValueDataEntry("\"День ${getDayOfWeek(day)}. Качество: ${dayQuality} %", dayQuality))
+            viewModel.add(columnViewModel)
+        }
+        return viewModel
+    }
+
+    private fun getDayOfWeek(number: Int): String {
+        when (number) {
+            1 -> return "Воскресенье"
+            2 -> return "Понедельник"
+            3 -> return "Вторник"
+            4 -> return "Среда"
+            5 -> return "Четверг"
+            6 -> return "Пятница"
+            7 -> return "Суббота"
+        }
+        return ""
     }
 }

@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TrainActivity"
+            android:name=".ui.TrainModule.Train.TrainActivity"
             android:label="@string/train_activity">
         </activity>
     </application>
