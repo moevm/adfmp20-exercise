@@ -1,8 +1,6 @@
 package com.example.myapplication.ui.StatisticsModule
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.anychart.anychart.ValueDataEntry
 import com.example.myapplication.ui.TrainModule.Train.CacheManager
@@ -16,7 +14,7 @@ class StatisticsViewModel(context: Context) : ViewModel() {
         val viewModel: MutableList<MutableList<ValueDataEntry>> = mutableListOf()
         for (training in trainResult) {
             val columnViewModel = mutableListOf<ValueDataEntry>()
-            columnViewModel.add(ValueDataEntry("\"Прошедшая тренировка. Качество: ${training} %", training))
+            columnViewModel.add(ValueDataEntry("\"Прошедшая тренировка. Качество: ${training.toString().take(4)} %", training))
             viewModel.add(columnViewModel)
         }
         return viewModel
@@ -39,9 +37,9 @@ class StatisticsViewModel(context: Context) : ViewModel() {
 
         for (day in 1..8) {
             val trainingsList = cacheManager.getTrainsResultByDay(day)
-            var dayQuality = trainingsList.sum() / trainingsList.count()
+            val dayQuality = trainingsList.sum() / trainingsList.count()
             val columnViewModel = mutableListOf<ValueDataEntry>()
-            columnViewModel.add(ValueDataEntry("\"День ${getDayOfWeek(day)}. Качество: ${dayQuality} %", dayQuality))
+            columnViewModel.add(ValueDataEntry("\"День ${getDayOfWeek(day)}. Качество: ${dayQuality.toString().take(4)} %", dayQuality))
             viewModel.add(columnViewModel)
         }
         return viewModel
