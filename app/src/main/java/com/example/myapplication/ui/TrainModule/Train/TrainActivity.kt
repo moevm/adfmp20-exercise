@@ -7,7 +7,10 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -45,6 +48,7 @@ class TrainActivity: BaseCoordinatelyActivity(), SensorEventListener {
     override fun onSensorChanged(p0: SensorEvent?) {
 //        Sensor change value
         if (p0?.sensor?.type == Sensor.TYPE_ACCELEROMETER && state == TrainActivityState.InProgress) {
+            vibratePhone()
             trainViewModel.setTrainData(RepeatModel(p0.values[0].toDouble(), p0.values[1].toDouble(), p0.values[2].toDouble()))
         }
     }
@@ -88,6 +92,19 @@ class TrainActivity: BaseCoordinatelyActivity(), SensorEventListener {
         return true
     }
 
+    // MARK: - Private methods
+
+    // MARK: Vibration handling
+
+    private fun vibratePhone() {
+        val vibrator: Vibrator = applicationContext?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(200)
+        }
+    }
+
     private fun addButtonClickHandling() {
         val startButton: Button = findViewById(R.id.startTrainButton)
         val header: TextView = findViewById(R.id.trainResult)
@@ -109,7 +126,7 @@ class TrainActivity: BaseCoordinatelyActivity(), SensorEventListener {
                     val summaryResult: Double = trainViewModel.getResult() ?: 0.0
                     val trainResult = TrainResultModel().getTrainResult(summaryResult)
                     setResultedColor(trainResult)
-                    percentResult.text = "${summaryResult.toString().take(3)} %"
+                    percentResult.text = "${summaryResult.toString().take(4)} %"
 
                 }
             }
@@ -124,8 +141,6 @@ class TrainActivity: BaseCoordinatelyActivity(), SensorEventListener {
             TrainResultModel.TrainResult.Low -> percentResult.setTextColor(Color.RED)
         }
     }
-
-    // MARK: - Private methods
 
     private fun saveResultInCache(result: Double) {
         val cacheManager =  CacheManager(this.applicationContext)
