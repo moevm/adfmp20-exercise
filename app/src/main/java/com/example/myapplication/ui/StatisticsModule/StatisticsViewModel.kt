@@ -3,11 +3,12 @@ package com.example.myapplication.ui.StatisticsModule
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.anychart.anychart.ValueDataEntry
+import com.example.myapplication.ui.TrainModule.Train.APP_PREFERENCES_TRAIN_RESULT_KEY
 import com.example.myapplication.ui.TrainModule.Train.CacheManager
 
 class StatisticsViewModel(context: Context) : ViewModel() {
 
-    private val cacheManager: CacheManager = CacheManager(context)
+    private val cacheManager: CacheManager = CacheManager(context, APP_PREFERENCES_TRAIN_RESULT_KEY)
 
     fun getDayViewModel(): MutableList<MutableList<ValueDataEntry>> {
         val trainResult: MutableList<Double> = cacheManager.getTrainsResultByCurrentDay()
