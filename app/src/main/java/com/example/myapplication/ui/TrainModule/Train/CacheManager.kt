@@ -7,9 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 import kotlin.reflect.KProperty
 
-class CacheManager(context: Context) {
+class CacheManager(context: Context, key: String) {
 
-    private val cache: SharedPreferences = context.getSharedPreferences(APP_PREFERENCES_TRAIN_RESULT_KEY, AppCompatActivity.MODE_PRIVATE)
+    private val cache: SharedPreferences = context.getSharedPreferences(key, AppCompatActivity.MODE_PRIVATE)
     private val currentWeekDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
     private val separator = "/"
 

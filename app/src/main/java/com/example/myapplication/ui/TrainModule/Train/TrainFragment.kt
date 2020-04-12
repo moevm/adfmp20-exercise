@@ -12,8 +12,6 @@ import com.example.myapplication.R
 
 class TrainFragment : Fragment() {
 
-    var customView: View? = null
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

@@ -143,8 +143,7 @@ class TrainActivity: BaseCoordinatelyActivity(), SensorEventListener {
     }
 
     private fun saveResultInCache(result: Double) {
-        val cacheManager =  CacheManager(this.applicationContext)
-        Log.d("warning here week day", " -> ${cacheManager.getTrainsResultByCurrentDay()}")
+        val cacheManager = CacheManager(this.applicationContext, APP_PREFERENCES_TRAIN_RESULT_KEY)
         cacheManager.setTrainingResult(result)
     }
 
