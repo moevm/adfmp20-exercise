@@ -26,8 +26,7 @@ class CacheManagerTest {
         beforeEach()
         val expectedResult = 71.0
         cacheManager.setTrainingResult(expectedResult)
-        assertEquals(true, false)
-        //assertEquals(cacheManager.getTrainsResultByDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)), mutableListOf(expectedResult))
+        assertEquals(cacheManager.getTrainsResultByDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)), mutableListOf(expectedResult))
     }
 
     private fun beforeEach() {
