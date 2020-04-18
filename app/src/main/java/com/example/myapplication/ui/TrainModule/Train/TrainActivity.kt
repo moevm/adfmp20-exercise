@@ -32,13 +32,13 @@ class TrainActivity: BaseCoordinatelyActivity(), SensorEventListener {
 
     private enum class TrainActivityState { NotStarted, InProgress, Finished }
 
-    private val trainFragment = TrainFragment()
     private lateinit var trainViewModel: TrainViewModel
     private var state: TrainActivityState = TrainActivityState.NotStarted
 
     // MARK: - SensorEventListener conforming
 
     private lateinit var mSensorManager: SensorManager
+    private lateinit var header: TextView
     private var mSensors: Sensor? = null
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
@@ -49,7 +49,7 @@ class TrainActivity: BaseCoordinatelyActivity(), SensorEventListener {
 //        Sensor change value
         if (p0?.sensor?.type == Sensor.TYPE_ACCELEROMETER && state == TrainActivityState.InProgress) {
             vibratePhone()
-            trainViewModel.setTrainData(RepeatModel(p0.values[0].toDouble(), p0.values[1].toDouble(), p0.values[2].toDouble()))
+            header.text = "Сделано повторений: ${trainViewModel.setTrainData(RepeatModel(p0.values[0].toDouble(), p0.values[1].toDouble(), p0.values[2].toDouble()))}"
         }
     }
 
@@ -72,6 +72,7 @@ class TrainActivity: BaseCoordinatelyActivity(), SensorEventListener {
             ViewModelProviders.of(this).get(TrainViewModel::class.java)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activty_train)
+        header = findViewById(R.id.trainResult)
         configureSensors()
         addButtonClickHandling()
         setActionBar()
@@ -107,13 +108,12 @@ class TrainActivity: BaseCoordinatelyActivity(), SensorEventListener {
 
     private fun addButtonClickHandling() {
         val startButton: Button = findViewById(R.id.startTrainButton)
-        val header: TextView = findViewById(R.id.trainResult)
         val percentResult: TextView = findViewById(R.id.percentValue)
         startButton.setOnClickListener {
             when (state) {
                 TrainActivityState.NotStarted, TrainActivityState.Finished -> {
                     startButton.text = "Завершить"
-                    header.text = "Рассчитываем результат..."
+                    header.text = "Сделано повторений: "
                     percentValue.isVisible = false
                     state = TrainActivityState.InProgress
                 }
