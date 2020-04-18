@@ -31,9 +31,13 @@ class TrainResultModel {
 class TrainViewModel : ViewModel() {
 
     private var repeats: MutableList<RepeatModel> = mutableListOf()
+    private var inProgressRepeatsCount: Int = 0
+    private var minimumRepeatResult: Double = 5.0
 
-    fun setTrainData(repeatModel: RepeatModel) {
+    fun setTrainData(repeatModel: RepeatModel): Int {
         repeats.add(filterNoiseData(repeatModel))
+        if (isResultSatisfactioned()) { inProgressRepeatsCount += 1 }
+        return inProgressRepeatsCount
     }
 
     fun getResult(): Double? {
@@ -45,6 +49,18 @@ class TrainViewModel : ViewModel() {
     }
 
     // MARK: - Private methods
+
+    /// трекаем, является ли выполненный повтор достаточным для засчитывания
+    private fun isResultSatisfactioned(): Boolean {
+        val lastRepeat: RepeatModel = repeats.last()
+        var beforeLastRepeat: RepeatModel = RepeatModel(0.0, 0.0, 0.0)
+        if (repeats.count() <= 1) {
+            beforeLastRepeat = repeats[repeats.lastIndex]
+        }
+        val beforeLastSum = (beforeLastRepeat.x + beforeLastRepeat.y) / 2
+        var resultSum: Double = (lastRepeat.x + lastRepeat.y) / 2
+        return resultSum >= minimumRepeatResult && resultSum > beforeLastSum + 5.9
+    }
 
     /// Суммируем полученные от аксилерометра значения
     private fun getResultedSums(): Double {
