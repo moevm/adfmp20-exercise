@@ -124,10 +124,15 @@ class TrainActivity: BaseCoordinatelyActivity(), SensorEventListener {
                     state = TrainActivityState.Finished
 
                     val summaryResult: Double = trainViewModel.getResult() ?: 0.0
-                    val trainResult = TrainResultModel().getTrainResult(summaryResult)
-                    setResultedColor(trainResult)
-                    percentResult.text = "${summaryResult.toString().take(4)} %"
-
+                    if (summaryResult != 0.0) {
+                        val trainResult = TrainResultModel().getTrainResult(summaryResult)
+                        setResultedColor(trainResult)
+                        percentResult.text = "${summaryResult.toString().take(4)} %"
+                    }
+                    else {
+                        setResultedColor(TrainResultModel.TrainResult.Low)
+                        header.text = "Количество повторений недостаточно для расчета результата,\nповторите снова"
+                    }
                 }
             }
         }

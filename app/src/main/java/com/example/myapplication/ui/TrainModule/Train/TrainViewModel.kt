@@ -42,6 +42,7 @@ class TrainViewModel : ViewModel() {
 
     fun getResult(): Double? {
         var result = getResultedSums() * 100
+        inProgressRepeatsCount = 0
         if (result > 0.0) {
             return if (result > 100.0) 100.0 else result
         }
